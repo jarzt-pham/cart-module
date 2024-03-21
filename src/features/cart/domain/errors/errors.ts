@@ -1,0 +1,19 @@
+export enum ErrorNamespaces {
+    CART = 'CART',
+    CART_ITEM = 'CART_ITEM',
+}
+
+export enum CartErrorCodes {
+    NOT_FOUND = 10000,
+    NOT_ENABLED = 10000,
+    ADD_TO_CART_PRODUCT_NOT_FOUND,
+    ADD_TO_CART_PRODUCT_NOT_AVAILABLE,
+    ADD_TO_CART_INVALID_QTY,
+    ADD_TO_CART_INVALID_PRODUCT_TYPE,
+    PRODUCT_SALEABLE_QTY_NOT_ENOUGH,
+}
+
+export enum CartItemErrorCodes {
+    NOT_FOUND = 20000,
+    NOT_BELONG_TO_USER = 20001,
+}

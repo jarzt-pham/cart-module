@@ -1,0 +1,3082 @@
+openapi: 3.0.2
+info:
+  title: CART MODULE
+  version: 1.2.14
+paths:
+  /carts/attributes:
+    get:
+      tags:
+        - cart attribute
+      summary: Get List Cart Attribute
+      operationId: GetListCartAttribute
+      parameters:
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/AttributeFilterQuery'
+        - $ref: '#/components/parameters/AttributeSortQuery'
+      responses:
+        '200':
+          description: 'Get List Cart Attribute successfully'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AttributeModel'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+  /carts/attributes/{attributeId}:
+    parameters:
+      - $ref: '#/components/parameters/AttributeIdParam'
+    get:
+      tags:
+        - cart attribute
+      summary: Get Cart Attribute By Id
+      operationId: GetCartAttributeById
+      responses:
+        '200':
+          description: Get Cart Attribute By Id successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      data:
+                        allOf:
+                          - $ref: '#/components/schemas/AttributeModel'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '404':
+          $ref: '#/components/responses/CartAttributeNotFoundError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - bearer: [ ]
+  /carts/attributes/paginate:
+    get:
+      tags:
+        - cart attribute
+      summary: Get List Cart Attribute Paginate
+      operationId: GetListAttributePaginate
+      parameters:
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/AttributeFilterQuery'
+        - $ref: '#/components/parameters/AttributeSortQuery'
+      responses:
+        '200':
+          description: 'Get List Cart Attribute Paginate successfully'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasePaginationResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AttributeModel'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+  /carts/mini:
+    get:
+      tags:
+        - cart
+      summary: Get Cart Mini
+      operationId: GetCartMini
+      parameters: [ ]
+      responses:
+        '200':
+          description: Get Cart Mini successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      data:
+                        allOf:
+                          - $ref: '#/components/schemas/CartMiniModel'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - bearer: [ ]
+  /carts:
+    get:
+      tags:
+        - cart
+      summary: Get Cart
+      operationId: GetCart
+      parameters: [ ]
+      responses:
+        '200':
+          description: Get Cart successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      data:
+                        allOf:
+                          - $ref: '#/components/schemas/GetCartModel'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - bearer: [ ]
+  /carts/add-to-cart:
+    post:
+      tags:
+        - cart
+      summary: Add To Cart
+      operationId: AddToCart
+      parameters: [ ]
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddToCartRequest'
+        required: true
+      responses:
+        '204':
+          description: Add To Cart successfully
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - bearer: [ ]
+  /carts/items/{cartItemId}:
+    parameters:
+      - $ref: '#/components/parameters/CartItemIdParam'
+    patch:
+      tags:
+        - cart
+      summary: Update Quantity Cart Item
+      operationId: UpdateQuantityCartItem
+      parameters: [ ]
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateQuantityRequest'
+            example:
+              quantity: 5
+        required: true
+      responses:
+        '204':
+          description: Update Quantity Cart Item successfully
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - bearer: [ ]
+    delete:
+      tags:
+        - cart
+      summary: Remove Cart Item
+      operationId: RemoveCartItem
+      parameters: [ ]
+      responses:
+        '204':
+          description: Remove Cart Item successfully
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - bearer: [ ]
+  /carts/remove/disabled:
+    post:
+      tags:
+        - cart
+      summary: Remove Disabled Cart Item
+      operationId: RemoveDisabledCartItem
+      parameters: [ ]
+      responses:
+        '204':
+          description: Remove Disabled Cart Item successfully
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - bearer: [ ]
+  /carts/pre-checkout:
+    post:
+      tags:
+        - cart
+      summary: PreCheckout
+      operationId: PreCheckout
+      parameters:
+        - $ref: '#/components/parameters/PreCheckoutIncludeParam'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/PreCheckoutRequest'
+                - $ref: '#/components/schemas/PreCheckoutWithDeliveryRequest'
+        required: true
+      responses:
+        '200':
+          description: PreCheckout successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      data:
+                        oneOf:
+                          - $ref: '#/components/schemas/PreCheckoutModel'
+                          - $ref: '#/components/schemas/PreCheckoutWithDeliveryModel'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - bearer: [ ]
+  /carts/pre-checkout/coupon:
+    post:
+      tags:
+        - cart
+      summary: Add Coupon Pre checkout
+      operationId: AddCouponPreCheckout
+      parameters: [ ]
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCouponPreCheckoutRequest'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: { }
+      deprecated: false
+      security:
+        - bearer: [ ]
+  /carts/calculate:
+    post:
+      tags:
+        - cart
+      summary: Calculate Checkout Price For Booking
+      operationId: CalculateCheckoutPriceForBooking
+      parameters: [ ]
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalculateCheckoutPriceForBookingRequest'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: { }
+      deprecated: false
+      security:
+        - bearer: [ ]
+  /admin/carts/attributes:
+    get:
+      tags:
+        - admin cart attribute
+      summary: Get List Cart Attribute
+      operationId: AdminGetListCartAttribute
+      parameters:
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/AttributeFilterQuery'
+        - $ref: '#/components/parameters/AttributeSortQuery'
+      responses:
+        '200':
+          description: 'Get List Cart Attribute successfully'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AttributeModel'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - bearer: [ ]
+    post:
+      tags:
+        - admin cart attribute
+      summary: Create Cart Attribute
+      operationId: AdminCreateCartAttribute
+      parameters: [ ]
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAttributeRequest'
+        required: true
+      responses:
+        '201':
+          description: Create Attribute successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      data:
+                        allOf:
+                          - $ref: '#/components/schemas/AttributeModel'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - bearer: [ ]
+  /admin/carts/attributes/paginate:
+    get:
+      tags:
+        - admin cart attribute
+      summary: Get List Cart Attribute Paginate
+      operationId: AdminGetListAttributePaginate
+      parameters:
+        - $ref: '#/components/parameters/OffsetParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - $ref: '#/components/parameters/AttributeFilterQuery'
+        - $ref: '#/components/parameters/AttributeSortQuery'
+      responses:
+        '200':
+          description: 'Get List Cart Attribute Paginate successfully'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BasePaginationResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AttributeModel'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - bearer: [ ]
+  /admin/carts/attributes/{attributeId}:
+    parameters:
+      - $ref: '#/components/parameters/AttributeIdParam'
+    get:
+      tags:
+        - admin cart attribute
+      summary: Get Cart Attribute By Id
+      operationId: AdminGetCartAttributeById
+      responses:
+        '200':
+          description: Get Cart Attribute By Id successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      data:
+                        allOf:
+                          - $ref: '#/components/schemas/AttributeModel'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/CartAttributeNotFoundError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - bearer: [ ]
+    patch:
+      tags:
+        - admin cart attribute
+      summary: Update Cart Attribute
+      operationId: AdminUpdateCartAttribute
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAttributeRequest'
+        required: true
+      responses:
+        '204':
+          description: Update Cart Attribute successfully
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/CartAttributeNotFoundError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - bearer: [ ]
+    delete:
+      tags:
+        - admin cart attribute
+      summary: Delete Cart Attribute
+      operationId: AdminDeleteCartAttribute
+      responses:
+        '204':
+          description: Delete Cart Attribute successfully
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/CartAttributeNotFoundError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - bearer: [ ]
+  /internal/carts/checkout:
+    post:
+      tags:
+        - internal cart
+      summary: Check Out Cart
+      operationId: InternalInternalCheckOutCart
+      parameters:
+        - $ref: '#/components/parameters/PreCheckoutIncludeParam'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/CheckOutCartRequest'
+                - $ref: '#/components/schemas/CheckOutCartWithDeliveryRequest'
+        required: true
+      responses:
+        '200':
+          description: PreCheckout successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/BaseResponse'
+                  - type: object
+                    properties:
+                      data:
+                        oneOf:
+                          - $ref: '#/components/schemas/CheckOutModel'
+                          - $ref: '#/components/schemas/CheckOutWithDeliveryModel'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - apiKey: [ ]
+  /internal/carts/update-status-completed:
+    post:
+      tags:
+        - internal cart
+      summary: Update Status Completed To Cart Checkout
+      operationId: InternalUpdateStatusCompletedToCartCheckout
+      parameters: [ ]
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStatusCompletedToCartCheckoutRequest'
+            example:
+              listCartIds:
+                - 062de03c-3cb6-4724-b101-c1b8cdf6f04d
+        required: true
+      responses:
+        '204':
+          description: Update Status Completed To Cart Checkout successfully
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/CartNotFoundError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - apiKey: [ ]
+  /internal/carts/update-status-failed:
+    post:
+      tags:
+        - internal cart
+      summary: Update Status Failed To Cart Check Out
+      operationId: InternalUpdateStatusFailedToCartCheckOut
+      parameters: [ ]
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStatusFailedToCartCheckoutRequest'
+        required: true
+      responses:
+        '204':
+          description: Update Status Failed To Cart Check Out successfully
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/CartNotFoundError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - apiKey: [ ]
+  /internal/carts/checkout/rollback:
+    post:
+      tags:
+        - internal cart
+      summary: Rollback Cart Checkout
+      operationId: InternalRollbackCartCheckout
+      parameters: [ ]
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RollbackCartCheckoutRequest'
+        required: true
+      responses:
+        '204':
+          description: Rollback Cart Checkout successfully
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/CartNotFoundError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: false
+      security:
+        - apiKey: [ ]
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKey:
+      description: for internal api
+      type: apiKey
+      name: internal-api-key
+      in: header
+  responses:
+    BadRequestError:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ValidationError:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ErrorResponse'
+              - type: object
+                properties:
+                  detail:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        property:
+                          type: string
+                  message:
+                    type: array
+                    items:
+                      type: string
+          example:
+            error: "VALIDATION-ERR:4001"
+            message: "label must be a string"
+            detail:
+              - property: "label must be a string"
+                message:
+                  - label must be a string
+                  - label must be longer than or equal to 1 characters
+                  - label must be shorter than or equal to 128 characters
+            payloadType: body
+    UnauthorizedError:
+      description: Unauthorized
+    ServerError:
+      description: Server encountered an error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ServerErrorResponse'
+    CartAttributeNotFoundError:
+      description: Cart Attribute Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: CART_ATTRIBUTE:10000
+            message: Cart attribute not found
+    CartNotFoundError:
+      description: Cart Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: CART:1000
+            message: Cart not found
+  schemas:
+    BaseResponse:
+      type: object
+      properties:
+        data:
+          type: object
+    BasePaginationResponse:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            offset:
+              type: integer
+            limit:
+              type: integer
+            total:
+              type: integer
+          example:
+            offset: 0
+            limit: 10
+            total: 20
+        data:
+          type: object
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    ServerErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: Sorry our server encountered an error.
+    StringFilterOperator:
+      type: object
+      properties:
+        eq:
+          type: string
+          nullable: true
+          description: equal
+        in:
+          type: string
+          description: in list
+        notIn:
+          type: string
+          description: not in list
+        contains:
+          type: string
+          description: contains
+        startWith:
+          type: string
+          description: startWith
+        endWith:
+          type: string
+          description: endWith
+        not:
+          type: string
+          nullable: true
+          description: not equal
+    BoolFilterOperator:
+      type: object
+      properties:
+        eq:
+          type: boolean
+          nullable: true
+          description: equal
+        not:
+          type: boolean
+          nullable: true
+          description: not equal
+    NumberFilterOperator:
+      type: object
+      properties:
+        eq:
+          type: number
+          nullable: true
+          description: equal
+        in:
+          type: number
+          description: in list
+        notIn:
+          type: number
+          description: not in list
+        lt:
+          type: number
+          description: less than
+        lte:
+          type: number
+          description: less than or equal
+        gt:
+          type: number
+          description: greater than
+        gte:
+          type: number
+          description: greater than or equal
+        not:
+          type: number
+          nullable: true
+          description: not equal
+    UUIDFilterOperator:
+      type: object
+      properties:
+        eq:
+          type: string
+          format: UUID
+          nullable: true
+          description: equal
+        in:
+          type: string
+          format: UUID
+          description: in list
+        notIn:
+          type: string
+          format: UUID
+          description: not in list
+        not:
+          type: string
+          format: UUID
+          nullable: true
+          description: not equal
+    SortOperator:
+      type: string
+      enum:
+        - asc
+        - desc
+    FilterEav:
+      title: FilterEav
+      type: object
+      additionalProperties:
+        oneOf:
+          - $ref: '#/components/schemas/StringFilterOperator'
+          - $ref: '#/components/schemas/NumberFilterOperator'
+          - $ref: '#/components/schemas/BoolFilterOperator'
+          - $ref: '#/components/schemas/UUIDFilterOperator'
+      description: attributeCode is code of attribute
+      example:
+        test_string:
+          eq: hehe
+    AttributeType:
+      type: string
+      enum:
+        - string
+        - number
+        - boolean
+        - array
+    ValueOfAttributeType:
+      description: any type of string, number, boolean, array
+      oneOf:
+        - type: string
+        - type: number
+        - type: boolean
+        - type: array
+          items:
+            type: string
+        - nullable: true
+    AttributeModel:
+      title: AttributeModel
+      required:
+        - id
+        - createdAt
+        - code
+        - label
+        - type
+        - isRequired
+        - isUnique
+        - visibility
+        - defaultValue
+        - sortOrder
+        - systemDefined
+        - status
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        createdAt:
+          description: Tracking time create entity
+          type: integer
+          format: int32
+        updatedAt:
+          description: Tracking time update entity
+          type: integer
+          format: int32
+        code:
+          type: string
+        label:
+          type: string
+        type:
+          $ref: '#/components/schemas/AttributeType'
+        isRequired:
+          type: boolean
+        isUnique:
+          type: boolean
+        visibility:
+          type: boolean
+        defaultValue:
+          $ref: '#/components/schemas/ValueOfAttributeType'
+        sortOrder:
+          type: integer
+          format: int32
+        systemDefined:
+          type: boolean
+        status:
+          type: boolean
+      example:
+        id: 63fc7ec1-43f4-41ca-a2cd-ce48fb88783f
+        createdAt: 1636345541492
+        updatedAt: null
+        code: test
+        label: Test Attribute
+        type: number
+        isRequired: false
+        isUnique: false
+        visibility: false
+        defaultValue: 1
+        sortOrder: 0
+        systemDefined: true
+        status: true
+    AttributeFilter:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/UUIDFilterOperator'
+        createdAt:
+          $ref: '#/components/schemas/NumberFilterOperator'
+        updatedAt:
+          $ref: '#/components/schemas/NumberFilterOperator'
+        code:
+          $ref: '#/components/schemas/StringFilterOperator'
+        label:
+          $ref: '#/components/schemas/StringFilterOperator'
+        type:
+          $ref: '#/components/schemas/StringFilterOperator'
+        isRequired:
+          $ref: '#/components/schemas/BoolFilterOperator'
+        isUnique:
+          $ref: '#/components/schemas/BoolFilterOperator'
+        visibility:
+          $ref: '#/components/schemas/BoolFilterOperator'
+        sortOrder:
+          $ref: '#/components/schemas/NumberFilterOperator'
+        systemDefined:
+          $ref: '#/components/schemas/BoolFilterOperator'
+        status:
+          $ref: '#/components/schemas/StringFilterOperator'
+    AttributeSort:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/SortOperator'
+        createdAt:
+          $ref: '#/components/schemas/SortOperator'
+        updatedAt:
+          $ref: '#/components/schemas/SortOperator'
+        code:
+          $ref: '#/components/schemas/SortOperator'
+        label:
+          $ref: '#/components/schemas/SortOperator'
+        type:
+          $ref: '#/components/schemas/SortOperator'
+        isRequired:
+          $ref: '#/components/schemas/SortOperator'
+        isUnique:
+          $ref: '#/components/schemas/SortOperator'
+        visibility:
+          $ref: '#/components/schemas/SortOperator'
+        sortOrder:
+          $ref: '#/components/schemas/SortOperator'
+        systemDefined:
+          $ref: '#/components/schemas/SortOperator'
+        status:
+          $ref: '#/components/schemas/SortOperator'
+    CreateAttributeRequest:
+      title: CreateAttributeRequest
+      required:
+        - code
+        - label
+        - type
+        - isRequired
+        - isUnique
+        - visibility
+      type: object
+      properties:
+        code:
+          type: string
+        label:
+          type: string
+        type:
+          $ref: '#/components/schemas/AttributeType'
+        isRequired:
+          type: boolean
+        isUnique:
+          type: boolean
+        visibility:
+          type: boolean
+        defaultValue:
+          $ref: '#/components/schemas/ValueOfAttributeType'
+        sortOrder:
+          type: integer
+          format: int32
+      example:
+        code: test
+        label: Test Attribute
+        type: number
+        isRequired: false
+        isUnique: false
+        visibility: false
+        defaultValue: 1
+        sortOrder: 0
+    UpdateAttributeRequest:
+      title: UpdateAttributeRequest
+      type: object
+      properties:
+        label:
+          type: string
+        type:
+          $ref: '#/components/schemas/AttributeType'
+        isRequired:
+          type: boolean
+        isUnique:
+          type: boolean
+        visibility:
+          type: boolean
+        defaultValue:
+          $ref: '#/components/schemas/ValueOfAttributeType'
+        sortOrder:
+          type: integer
+          format: int32
+        status:
+          type: string
+      example:
+        label: Location 1
+        type: string
+        isRequired: false
+        isUnique: false
+        visibility: false
+        defaultValue: null
+        sortOrder: 2
+        status: disabled
+    SaveValueAttributeForEntityByAttributeIdRequest:
+      title: SaveValueAttributeForEntityRequest
+      required:
+        - entityId
+        - attributeId
+        - value
+      type: object
+      properties:
+        entityId:
+          type: string
+        attributeId:
+          type: string
+          description: (optional), if using attributeId not set code
+        value:
+          $ref: '#/components/schemas/ValueOfAttributeType'
+      example:
+        entityId: 1d5d9b3a-eafc-4726-9f20-a0b5e3a793b0
+        attributeId: 7edfd3a9-3989-4bd1-8c1c-67d17ff19868
+        value: 125 New York, USA
+    SaveValueAttributeForEntityByAttributeCodeRequest:
+      title: SaveValueAttributeForEntityRequest
+      required:
+        - entityId
+        - code
+        - value
+      type: object
+      properties:
+        entityId:
+          type: string
+        code:
+          type: string
+          description: attribute code,(optional) if using code not set attributeId
+        value:
+          $ref: '#/components/schemas/ValueOfAttributeType'
+      example:
+        entityId: 1d5d9b3a-eafc-4726-9f20-a0b5e3a793b0
+        code: address_2
+        value: 125 New York, USA
+    SaveValueAttributeForEntityRequest:
+      title: SaveValueAttributeForEntityRequest
+      oneOf:
+        - $ref: '#/components/schemas/SaveValueAttributeForEntityByAttributeIdRequest'
+        - $ref: '#/components/schemas/SaveValueAttributeForEntityByAttributeCodeRequest'
+      example:
+        entityId: 1d5d9b3a-eafc-4726-9f20-a0b5e3a793b0
+        code: address_2
+        value: 125 New York, USA
+    SaveListValueAttributeForEntityRequest:
+      title: SaveListValueAttributeForEntityRequest
+      required:
+        - values
+      type: object
+      properties:
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/SaveValueAttributeForEntityRequest'
+          description: ''
+      example:
+        values:
+          - entityId: f2d565e2-6a88-4c51-98ff-298acc027591
+            code: address_2
+            value: New York 1, USA
+          - entityId: f2d565e2-6a88-4c51-98ff-298acc027591
+            code: year_of_birth
+            value: 1998
+    AttributeValueModel:
+      title: AttributeValuesModel
+      required:
+        - id
+        - createdAt
+        - value
+        - attribute
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        createdAt:
+          description: Tracking time create entity
+          type: integer
+          format: int32
+        updatedAt:
+          description: Tracking time update entity
+          type: integer
+          format: int32
+        value:
+          description: any type of int, string, boolean, array
+          oneOf:
+            - type: string
+            - type: integer
+              format: int32
+            - type: boolean
+            - type: array
+              items:
+                type: string
+        attribute:
+          $ref: '#/components/schemas/AttributeModel'
+      example:
+        id: 1d5d9b3a-eafc-4726-9f20-a0b5e3a793b0
+        createdAt: 1588888888
+        updatedAt: 1588888888
+        value: 125 New York, USA
+        attribute:
+          id: 7edfd3a9-3989-4bd1-8c1c-67d17ff19868
+          code: location
+          label: Location
+          type: string
+          isRequired: false
+          isUnique: false
+          visibility: false
+          defaultValue: null
+          sortOrder: 2
+          status: disabled
+    CartMiniModel:
+      title: CartMiniModel
+      required:
+        - totalItemCount
+        - totalQuantity
+        - recentCartItemDetail
+      type: object
+      properties:
+        totalItemCount:
+          type: integer
+          format: int32
+        totalQuantity:
+          type: integer
+          format: int32
+        recentCartItemDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecentCartItemDetailModel'
+          description: ''
+    RecentCartItemDetailModel:
+      title: RecentCartItemDetail
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - quantity
+        - productId
+        - product
+        - disabled
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          oneOf:
+            - type: integer
+              format: int64
+              nullable: true
+        quantity:
+          type: integer
+          format: int32
+        productId:
+          type: string
+        product:
+          $ref: '#/components/schemas/ProductModel'
+        disabled:
+          type: boolean
+    ProductModel:
+      title: ProductModel
+      required:
+        - id
+        - code
+        - targetId
+        - name
+        - shortDesc
+        - desc
+        - regularPrice
+        - finalPrice
+        - currency
+        - thumbnailUrl
+        - slug
+        - type
+        - featureType
+        - status
+        - visibility
+        - available
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - categoryId
+        - unitId
+        - brandId
+        - parentId
+        - metadata
+        - cart
+        - parent
+        - children
+        - attributeValues
+        - media
+        - unit
+        - brand
+        - systemAttributes
+        - stockConfig
+        - quantity
+        - sourceItems
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        targetId:
+          type: string
+        name:
+          type: string
+        shortDesc:
+          type: string
+          nullable: true
+        desc:
+          type: array
+          items:
+            type: string
+          description: ''
+        regularPrice:
+          type: integer
+          format: int32
+        finalPrice:
+          type: integer
+          format: int32
+        currency:
+          type: string
+        thumbnailUrl:
+          type: string
+          nullable: true
+        slug:
+          type: string
+          nullable: true
+        type:
+          type: string
+        featureType:
+          type: string
+        status:
+          type: string
+        visibility:
+          type: boolean
+        available:
+          type: boolean
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          oneOf:
+            - type: integer
+              format: int64
+              nullable: true
+            - type: string
+              nullable: true
+            - nullable: true
+        deletedAt:
+          type: string
+          nullable: true
+        categoryId:
+          type: string
+        unitId:
+          type: string
+          nullable: true
+        brandId:
+          type: string
+          nullable: true
+        parentId:
+          type: string
+          nullable: true
+        metadata:
+          type: string
+          nullable: true
+        category:
+          $ref: '#/components/schemas/CategoryModel'
+        parent:
+          oneOf:
+            - $ref: '#/components/schemas/ParentProductModel'
+            - type: string
+              nullable: true
+            - nullable: true
+        children:
+          type: array
+          items:
+            type: string
+          description: ''
+        attributeValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributeValueAquaModel'
+          description: ''
+        media:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/MediaModel'
+          description: ''
+        unit:
+          oneOf:
+            - $ref: '#/components/schemas/UnitModel'
+            - nullable: true
+        brand:
+          type: string
+          nullable: true
+        attributes:
+          $ref: '#/components/schemas/AttributesModel'
+        systemAttributes:
+          $ref: '#/components/schemas/SystemAttributesModel'
+        stockConfig:
+          oneOf:
+            - $ref: '#/components/schemas/StockConfigModel'
+            - type: string
+              nullable: true
+        quantity:
+          oneOf:
+            - $ref: '#/components/schemas/QuantityModel'
+            - nullable: true
+        sourceItems:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/SourceItemModel'
+          description: ''
+    CategoryModel:
+      title: CategoryModel
+      required:
+        - id
+        - code
+        - name
+        - desc
+        - thumbnailUrl
+        - level
+        - sortOrder
+        - visibility
+        - status
+        - createdAt
+        - updatedAt
+        - parentId
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        name:
+          type: string
+        desc:
+          type: string
+          nullable: true
+        thumbnailUrl:
+          type: string
+        level:
+          type: integer
+          format: int32
+        sortOrder:
+          type: integer
+          format: int32
+        visibility:
+          type: boolean
+        status:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+        parentId:
+          type: string
+          nullable: true
+      example:
+        id: a7c76a09-dc0b-4c3f-86eb-9e5c06f09d50
+        code: CBIHS02
+        name: General health
+        desc: null
+        thumbnailUrl: https://sgp1.digitaloceanspaces.com/dev.storage/test/abc/f102e2f6-5b24-488b-8e9a-7d7d3ce67729.png
+        level: 0
+        sortOrder: 0
+        visibility: true
+        status: enabled
+        createdAt: 1645069693521
+        updatedAt: 1651035909829
+        parentId: null
+    ParentProductModel:
+      title: ParentProductModel
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        targetId:
+          type: string
+        name:
+          type: string
+        shortDesc:
+          type: string
+          nullable: true
+        regularPrice:
+          type: integer
+          format: int32
+        finalPrice:
+          type: integer
+          format: int32
+        currency:
+          type: string
+        thumbnailUrl:
+          type: string
+        slug:
+          type: string
+        type:
+          type: string
+        featureType:
+          type: string
+        status:
+          type: string
+        visibility:
+          type: boolean
+        available:
+          type: boolean
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+        deletedAt:
+          type: string
+          nullable: true
+        categoryId:
+          type: string
+        unitId:
+          type: string
+          nullable: true
+        brandId:
+          type: string
+          nullable: true
+        parentId:
+          type: string
+          nullable: true
+        metadata:
+          type: string
+      example:
+        id: 61a69263-049e-47b5-881c-11d6486edb65
+        code: randomupc14
+        targetId: cb7137dd-156a-4551-a8f7-b388fbc6f0cb
+        name: physical product 14
+        shortDesc: null
+        regularPrice: 500000
+        finalPrice: 100000
+        currency: USD
+        thumbnailUrl: https://sgp1.digitaloceanspaces.com/dev.storage/product/89af8160-c77a-4c9b-b4e9-56503e00e331.png
+        slug: physical-product-14
+        type: configurable
+        featureType: ecom
+        status: disabled
+        visibility: true
+        available: false
+        createdAt: 1648542678027
+        updatedAt: 1651044670052
+        deletedAt: null
+        categoryId: 7c337d6f-921b-4a09-a9a5-41649ac5b692
+        unitId: 56e35695-7fe5-4d97-ad08-8c248c3af00a
+        brandId: 570256c5-93c7-4ada-8bb2-fb797616f1b2
+        parentId: null
+        metadata: '{"configurableOptions":[{"code":"color","label":"Color","type":"string","status":"enabled","sortOrder":0,"visibility":true,"systemDefined":false,"isRequired":false,"editable":true,"options":["red","green","blue"],"createdAt":1646968102372,"updatedAt":1647527210836}]}'
+    StockConfigModel:
+      title: StockConfigModel
+      type: object
+      properties:
+        id:
+          type: string
+        itemId:
+          type: string
+        manageStock:
+          type: boolean
+        backorders:
+          type: boolean
+        outOfStockThreshold:
+          type: integer
+          format: int32
+      example:
+        id: 018be655-ac0d-491a-ace0-252c8785fe0c
+        itemId: 47c24a6b-7ec1-47c5-a8fa-d9ae32707c20
+        manageStock: false
+        backorders: false
+        outOfStockThreshold: 0
+    SourceItemModel:
+      title: SourceItemModel
+      required:
+        - id
+        - sourceId
+        - itemId
+        - sku
+        - status
+        - quantity
+        - createdAt
+        - updatedAt
+        - deletedAt
+      type: object
+      properties:
+        id:
+          type: string
+        sourceId:
+          type: string
+        itemId:
+          type: string
+        sku:
+          type: string
+        status:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+        deletedAt:
+          type: string
+          nullable: true
+      example:
+        id: 8189fca8-619a-4d47-9065-2ae26a59ee70
+        sourceId: 9f644935-98c3-448e-b6aa-7f560a6e4271
+        itemId: 50a5ee4e-48d8-4281-8582-c19225d49727
+        sku: CBITEST_PHYSICAL_CONFIG_7_1
+        status: enabled
+        quantity: 3
+        createdAt: 1650941811847
+        updatedAt: 1650941895043
+        deletedAt: null
+    UnitModel:
+      title: UnitModel
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        desc:
+          type: string
+          nullable: true
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+      example:
+        id: 56e35695-7fe5-4d97-ad08-8c248c3af00a
+        name: bao
+        desc: null
+        createdAt: 1648110854104
+        updatedAt: 1650005834315
+    MediaModel:
+      title: MediaModel
+      type: object
+      properties:
+        id:
+          type: string
+        itemId:
+          type: string
+        value:
+          type: string
+        desc:
+          type: string
+        type:
+          type: string
+        sortOrder:
+          type: integer
+          format: int32
+        visibility:
+          type: boolean
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: string
+          nullable: true
+      example:
+        id: 3be8cf51-fe4f-48b6-842f-d13cde1d1414
+        itemId: 47c24a6b-7ec1-47c5-a8fa-d9ae32707c20
+        value: https://sgp1.digitaloceanspaces.com/dev.storage/product/dc66d526-7114-4c4a-8022-411feddaa734.png
+        desc: Image
+        type: image
+        sortOrder: 0
+        visibility: true
+        createdAt: 1648560055101
+        updatedAt: null
+    QuantityModel:
+      title: Quantity
+      type: object
+      properties:
+        id:
+          type: string
+        itemId:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        salableQuantity:
+          type: integer
+          format: int32
+        holdingQuantity:
+          type: integer
+          format: int32
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+          nullable: true
+    SystemAttributesModel:
+      title: SystemAttributesModel
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/AttributeCodeObjectModel'
+      example:
+        speciality:
+          label: Speciality
+          sortOrder: 0
+          value: 66fa9725-a3c1-4626-a31c-d937b4803762
+    AttributesModel:
+      title: AttributesModel
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/AttributeCodeObjectModel'
+      example:
+        color:
+          label: Color
+          sortOrder: 0
+          value: red
+    AttributeCodeObjectModel:
+      title: AttributeCodeObjectModel
+      required:
+        - label
+        - sortOrder
+        - value
+      type: object
+      properties:
+        label:
+          type: string
+        sortOrder:
+          type: integer
+          format: int32
+        value:
+          type: string
+      example:
+        label: Speciality
+        sortOrder: 0
+        value: 66fa9725-a3c1-4626-a31c-d937b4803762
+    AttributeValueAquaModel:
+      title: AttributeValueAquaModel
+      required:
+        - id
+        - value
+        - entityId
+        - attributeCode
+        - createdAt
+        - updatedAt
+        - attribute
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+        entityId:
+          type: string
+        attributeCode:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          oneOf:
+            - type: integer
+              format: int64
+              nullable: true
+            - type: string
+              nullable: true
+            - nullable: true
+        attribute:
+          $ref: '#/components/schemas/AttributeAquaModel'
+    AttributeAquaModel:
+      title: AttributeAquaModel
+      required:
+        - code
+        - label
+        - type
+        - status
+        - sortOrder
+        - visibility
+        - systemDefined
+        - isRequired
+        - editable
+        - options
+        - createdAt
+        - updatedAt
+      type: object
+      properties:
+        code:
+          type: string
+        label:
+          type: string
+        type:
+          type: string
+        status:
+          type: string
+        sortOrder:
+          type: integer
+          format: int32
+        visibility:
+          type: boolean
+        systemDefined:
+          type: boolean
+        isRequired:
+          type: boolean
+        editable:
+          type: boolean
+        options:
+          oneOf:
+            - type: array
+              items:
+                type: string
+              nullable: true
+            - type: array
+              items:
+                type: string
+            - nullable: true
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+    GetCartModel:
+      title: GetCartModel
+      required:
+        - subtotal
+        - grandTotal
+        - totalSaved
+        - totalItemCount
+        - totalQuantity
+        - cartDetail
+      type: object
+      properties:
+        subtotal:
+          type: integer
+          format: int64
+        grandTotal:
+          type: integer
+          format: int32
+        totalSaved:
+          type: integer
+          format: int64
+        totalItemCount:
+          type: integer
+          format: int32
+        totalQuantity:
+          type: integer
+          format: int32
+        cartDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartDetailModel'
+          description: ''
+    CartDetailModel:
+      title: CartDetailModel
+      required:
+        - id
+        - type
+        - status
+        - targetId
+        - cartItems
+        - store
+        - attributeValues
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        status:
+          type: string
+        targetId:
+          type: string
+        cartItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItemModel'
+          description: ''
+        store:
+          $ref: '#/components/schemas/StoreModel'
+        attributeValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributeValueModel'
+    CartItemModel:
+      title: CartItemModel
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - quantity
+        - productId
+        - product
+        - disabled
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          oneOf:
+            - type: integer
+              format: int64
+              nullable: true
+            - type: string
+              nullable: true
+            - nullable: true
+        quantity:
+          type: integer
+          format: int32
+        productId:
+          type: string
+        product:
+          $ref: '#/components/schemas/ProductModel'
+        disabled:
+          type: boolean
+    StoreModel:
+      title: StoreModel
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - deletedAt
+        - code
+        - name
+        - email
+        - phone
+        - sortOrder
+        - enabled
+        - attributeValues
+        - addressInfo
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          oneOf:
+            - type: integer
+              format: int64
+              nullable: true
+            - type: string
+              nullable: true
+            - nullable: true
+        deletedAt:
+          type: string
+          nullable: true
+        code:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        sortOrder:
+          type: integer
+          format: int32
+        enabled:
+          type: boolean
+        attributeValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributeValueModel'
+        addressInfo:
+          $ref: '#/components/schemas/StoreAddressInfoModel'
+    StoreAddressInfoModel:
+      title: StoreAddressInfoModel
+      required:
+        - country
+        - region
+        - province
+        - district
+        - ward
+        - address
+        - postalCode
+        - latitude
+        - longitude
+      type: object
+      properties:
+        country:
+          type: string
+        region:
+          type: string
+        province:
+          type: string
+        district:
+          type: string
+          nullable: true
+        ward:
+          type: string
+          nullable: true
+        address:
+          type: string
+        postalCode:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+      example:
+        country: USA
+        region: California
+        province: San Francisco
+        district: null
+        ward: null
+        address: 600-698 Kirkham St
+        postalCode: '94122'
+        latitude: 37.7574453
+        longitude: -122.4617661
+    AddToCartRequest:
+      title: AddToCartRequest
+      required:
+        - products
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductAddToCartRequest'
+          description: ''
+      example:
+        products:
+          - productId: 47c24a6b-7ec1-47c5-a8fa-d9ae32707c20
+            quantity: 1
+    ProductAddToCartRequest:
+      title: ProductAddToCartRequest
+      required:
+        - productId
+        - quantity
+      type: object
+      properties:
+        productId:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+      example:
+        productId: 47c24a6b-7ec1-47c5-a8fa-d9ae32707c20
+        quantity: 1
+    UpdateQuantityRequest:
+      title: UpdateQuantityRequest
+      required:
+        - quantity
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int32
+      example:
+        quantity: 5
+    PreCheckoutRequest:
+      title: PreCheckoutRequest
+      required:
+        - cartDetail
+        - couponIds
+        - paymentMethod
+      type: object
+      properties:
+        cartDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartDetailPreCheckoutRequest'
+          description: ''
+        couponIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: ''
+        paymentMethod:
+          type: string
+          nullable: true
+      example:
+        cartDetail:
+          - targetId: cb7137dd-156a-4551-a8f7-b388fbc6f0cb
+            selectedCartItems:
+              - adf15769-e0ac-49ad-b05a-e4f2ee00cf74
+          - targetId: 655f5803-cf79-46b2-8d9b-d38101579855
+            selectedCartItems:
+              - d076b4e3-6f28-4372-9a85-58abe06ffda9
+        couponIds:
+          - 12557384-fe16-4ce9-87dc-86f9a6b61e41
+        paymentMethod: null
+    PreCheckoutWithDeliveryRequest:
+      title: PreCheckoutWithDeliveryRequest
+      required:
+        - cartDetail
+        - couponIds
+        - paymentMethod
+      type: object
+      properties:
+        cartDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartDetailPreCheckoutWithDeliveryRequest'
+          description: ''
+        couponIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: ''
+        paymentMethod:
+          type: string
+          nullable: true
+        recipient:
+          $ref: '#/components/schemas/RecipientRequest'
+      example:
+        cartDetail:
+          - targetId: cb7137dd-156a-4551-a8f7-b388fbc6f0cb
+            selectedCartItems:
+              - adf15769-e0ac-49ad-b05a-e4f2ee00cf74
+          - targetId: 655f5803-cf79-46b2-8d9b-d38101579855
+            selectedCartItems:
+              - d076b4e3-6f28-4372-9a85-58abe06ffda9
+        couponIds:
+          - 12557384-fe16-4ce9-87dc-86f9a6b61e41
+        paymentMethod: null
+    RecipientRequest:
+      title: RecipientRequest
+      required:
+        - firstName
+        - lastName
+        - email
+        - phone
+        - country
+        - region
+        - province
+        - district
+        - ward
+        - address
+        - postalCode
+        - latitude
+        - longitude
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+          nullable: true
+        email:
+          type: string
+        phone:
+          type: string
+        country:
+          type: string
+          nullable: true
+        region:
+          type: string
+          nullable: true
+        province:
+          type: string
+        district:
+          type: string
+          nullable: true
+        ward:
+          type: string
+          nullable: true
+        address:
+          type: string
+          nullable: true
+        postalCode:
+          type: string
+          nullable: true
+        latitude:
+          type: number
+        longitude:
+          type: number
+      example:
+        firstName: long
+        lastName: ho
+        email: thanglong2098@gmail.com
+        phone: '84929250409'
+        country: Vietnam
+        region: null
+        province: Ho Chi Minh City
+        district: Thủ Đức
+        ward: Hiep Binh Chanh
+        address: Giga Mall Thủ Đức, Đường Phạm Văn Đồng, Hiep Binh Chanh, Thủ Đức, Ho Chi Minh City, Vietnam
+        postalCode: '70000'
+        latitude: 10.8277902
+        longitude: 106.7208967
+    CartDetailPreCheckoutRequest:
+      title: CartDetailPreCheckoutRequest
+      required:
+        - targetId
+        - selectedCartItems
+      type: object
+      properties:
+        targetId:
+          type: string
+        selectedCartItems:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: ''
+      example:
+        targetId: cb7137dd-156a-4551-a8f7-b388fbc6f0cb
+        selectedCartItems:
+          - adf15769-e0ac-49ad-b05a-e4f2ee00cf74
+    CartDetailPreCheckoutWithDeliveryRequest:
+      title: CartDetailPreCheckoutWithDeliveryRequest
+      allOf:
+        - $ref: '#/components/schemas/CartDetailPreCheckoutRequest'
+        - type: object
+          properties:
+            carrierCode:
+              type: string
+      example:
+        targetId: cb7137dd-156a-4551-a8f7-b388fbc6f0cb
+        selectedCartItems:
+          - 406f0c31-9dfd-423d-a5c8-07919eb0a919
+        carrierCode: grab
+    PreCheckoutModel:
+      title: PreCheckoutModel
+      required:
+        - checkoutPriceData
+        - cartDetail
+        - promotionData
+        - totalQuantity
+        - totalItemCount
+        - couponUsedQuantity
+      type: object
+      properties:
+        checkoutPriceData:
+          $ref: '#/components/schemas/CheckoutPriceDataModel'
+        cartDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartDetailReCheckoutModel'
+          description: ''
+        promotionData:
+          $ref: '#/components/schemas/PromotionDataModel'
+        totalQuantity:
+          type: integer
+          format: int32
+        totalItemCount:
+          type: integer
+          format: int32
+        couponUsedQuantity:
+          type: integer
+          format: int32
+    CheckoutPriceDataModel:
+      title: CheckoutPriceDataModel
+      required:
+        - couponApplied
+        - customTaxSubtotal
+        - merchandiseSubtotal
+        - taxExemption
+        - taxPayable
+        - totalPayable
+        - vatSubtotal
+      type: object
+      properties:
+        couponApplied:
+          type: integer
+          format: int32
+        customTaxSubtotal:
+          type: integer
+          format: int32
+        merchandiseSubtotal:
+          type: integer
+          format: int32
+        taxExemption:
+          type: integer
+          format: int32
+        taxPayable:
+          type: integer
+          format: int32
+        totalPayable:
+          type: integer
+          format: int32
+        vatSubtotal:
+          type: integer
+          format: int32
+      example:
+        couponApplied: 0
+        customTaxSubtotal: 0
+        merchandiseSubtotal: 1000036000
+        taxExemption: 0
+        taxPayable: 0
+        totalPayable: 1000036000
+        vatSubtotal: 0
+    CartDetailReCheckoutModel:
+      title: CartDetailReCheckoutModel
+      required:
+        - id
+        - type
+        - targetId
+        - cartItems
+        - orderTotal
+        - store
+        - attributeValues
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        targetId:
+          type: string
+        cartItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItemModel'
+          description: ''
+        orderTotal:
+          type: integer
+          format: int32
+        store:
+          $ref: '#/components/schemas/StoreModel'
+        attributeValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributeValueModel'
+    PromotionDataModel:
+      title: PromotionDataModel
+      required:
+        - coupons
+        - priceDiscount
+      type: object
+      properties:
+        coupons:
+          type: array
+          items:
+            type: string
+          description: ''
+        priceDiscount:
+          type: integer
+          format: int32
+      example:
+        coupons: [ ]
+        priceDiscount: 0
+    AddCouponPreCheckoutRequest:
+      title: AddCouponPreCheckoutRequest
+      required:
+        - cartDetail
+        - couponCode
+        - paymentMethod
+        - userId
+      type: object
+      properties:
+        cartDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartDetailPreCheckoutRequest'
+          description: ''
+        couponCode:
+          type: string
+        paymentMethod:
+          type: string
+          nullable: true
+      example:
+        cartDetail:
+          - targetId: 406f0c31-9dfd-423d-a5c8-07919eb0a919
+            selectCartItems:
+              - 'd076b4e3-6f28-4372-9a85-58abe06ffda9'
+        couponCode: CBITEST06
+        paymentMethod: null
+    CouponAppliedModel:
+      title: CouponAppliedModel
+      required:
+        - targetId
+        - selectCartItems
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        code:
+          type: string
+        visibility:
+          type: boolean
+        enabled:
+          type: boolean
+        ruleId:
+          type: string
+          format: uuid
+          nullable: true
+        usageLimit:
+          type: integer
+          format: int32
+          nullable: true
+        usagePerCustomer:
+          type: integer
+          format: int32
+          nullable: true
+        couponRule:
+          $ref: '#/components/schemas/CouponRuleModel'
+        discountAmount:
+          type: integer
+          format: int32
+      example:
+        id: 12557384-fe16-4ce9-87dc-86f9a6b61e41
+        createdAt: 1651027629250
+        updatedAt:
+        code: HKBAHNT1255
+        visibility: true
+        enabled: true
+        ruleId: fb5ac432-67ae-4e40-a2a6-a2290ad52daf
+        usageLimit:
+        usagePerCustomer: 1
+        couponRule:
+          id: fb5ac432-67ae-4e40-a2a6-a2290ad52daf
+          createdAt: 1651027629243
+          updatedAt:
+          title: title_Rachel.Parisian
+          description: eligendi sint pariatur
+          type: cart
+          discount: 70
+          isFixed: false
+          enabled: true
+          visibility: true
+          maxDiscount: 1000
+          newUserOnly: false
+          minSpend: 0
+          usesPerCustomer: 1
+          startTime: 1645433738726
+          endTime: 1682391399000
+          campaignId:
+          useAutoGeneration: false
+          usesPerCoupon:
+          couponQuantity:
+          codeLength:
+          codePrefix:
+          codeSuffix:
+          codeFormat:
+        discountAmount: 1000
+    CouponRuleModel:
+      title: CouponRuleModel
+      properties:
+        id:
+          type: string
+          format: uuid
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          oneOf:
+            - type: integer
+              format: int64
+              nullable: true
+            - type: string
+              nullable: true
+            - nullable: true
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        discount:
+          type: integer
+          format: int32
+        isFixed:
+          type: boolean
+        enabled:
+          type: boolean
+        visibility:
+          type: boolean
+        maxDiscount:
+          type: integer
+          format: int32
+        newUserOnly:
+          type: boolean
+        minSpend:
+          type: integer
+          format: int32
+          nullable: true
+        usesPerCustomer:
+          type: integer
+          format: int32
+          nullable: true
+        startTime:
+          type: integer
+          format: int64
+        endTime:
+          type: integer
+          format: int64
+        campaignId:
+          type: string
+          format: uuid
+          nullable: true
+        useAutoGeneration:
+          type: boolean
+        usesPerCoupon:
+          type: integer
+          nullable: true
+        couponQuantity:
+          type: integer
+          nullable: true
+        codeLength:
+          type: integer
+          nullable: true
+        codePrefix:
+          type: string
+          nullable: true
+        codeSuffix:
+          type: string
+          nullable: true
+        codeFormat:
+          type: string
+          nullable: true
+    PreCheckoutWithDeliveryModel:
+      title: PreCheckoutWithDeliveryModel
+      required:
+        - checkoutPriceData
+        - cartDetail
+        - promotionData
+        - totalQuantity
+        - totalItemCount
+        - couponUsedQuantity
+      type: object
+      properties:
+        checkoutPriceData:
+          $ref: '#/components/schemas/CheckoutPriceDataWithDeliveryModel'
+        cartDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartDetailReCheckoutWithDeliveryModel'
+          description: ''
+        promotionData:
+          $ref: '#/components/schemas/PromotionDataModel'
+        totalQuantity:
+          type: integer
+          format: int32
+        totalItemCount:
+          type: integer
+          format: int32
+        couponUsedQuantity:
+          type: integer
+          format: int32
+    CheckoutPriceDataWithDeliveryModel:
+      title: CheckoutPriceDataWithDeliveryModel
+      required:
+        - insuranceDiscountSubtotal
+        - couponApplied
+        - customTaxSubtotal
+        - insuranceBeforeDiscountSubtotal
+        - insuranceSubtotal
+        - merchandiseSubtotal
+        - shippingDiscountSubtotal
+        - shippingSubtotal
+        - shippingSubtotalBeforeDiscount
+        - taxExemption
+        - taxPayable
+        - totalPayable
+        - vatSubtotal
+      type: object
+      properties:
+        insuranceDiscountSubtotal:
+          type: integer
+          format: int32
+        couponApplied:
+          type: integer
+          format: int32
+        customTaxSubtotal:
+          type: integer
+          format: int32
+        insuranceBeforeDiscountSubtotal:
+          type: integer
+          format: int32
+        insuranceSubtotal:
+          type: integer
+          format: int32
+        merchandiseSubtotal:
+          type: integer
+          format: int32
+        shippingDiscountSubtotal:
+          type: integer
+          format: int32
+        shippingSubtotal:
+          type: integer
+          format: int32
+        shippingSubtotalBeforeDiscount:
+          type: integer
+          format: int32
+        taxExemption:
+          type: integer
+          format: int32
+        taxPayable:
+          type: integer
+          format: int32
+        totalPayable:
+          type: integer
+          format: int32
+        vatSubtotal:
+          type: integer
+          format: int32
+      example:
+        insuranceDiscountSubtotal: 0
+        couponApplied: 0
+        customTaxSubtotal: 0
+        insuranceBeforeDiscountSubtotal: 0
+        insuranceSubtotal: 0
+        merchandiseSubtotal: 30000
+        shippingDiscountSubtotal: 0
+        shippingSubtotal: 2000
+        shippingSubtotalBeforeDiscount: 2000
+        taxExemption: 0
+        taxPayable: 0
+        totalPayable: 32000
+        vatSubtotal: 0
+    CartDetailReCheckoutWithDeliveryModel:
+      title: CartDetailReCheckoutWithDeliveryModel
+      required:
+        - id
+        - type
+        - targetId
+        - cartItems
+        - orderTotalWithoutShipping
+        - shippingOrder
+        - orderTotal
+        - store
+        - shippingOptions
+        - attributeValues
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        targetId:
+          type: string
+        cartItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItemModel'
+          description: ''
+        orderTotalWithoutShipping:
+          type: integer
+          format: int32
+        shippingOrder:
+          oneOf:
+            - $ref: '#/components/schemas/ShippingOptionModel'
+            - nullable: true
+        orderTotal:
+          type: integer
+          format: int32
+        store:
+          $ref: '#/components/schemas/StoreModel'
+        shippingOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShippingOptionModel'
+          description: ''
+        attributeValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributeValueModel'
+    ShippingOptionModel:
+      title: ShippingOption
+      required:
+        - quotes
+        - success
+        - carrier
+      type: object
+      properties:
+        quotes:
+          $ref: '#/components/schemas/DeliveryQuotesModel'
+        success:
+          type: boolean
+        carrier:
+          $ref: '#/components/schemas/CarrierModel'
+      example:
+        quotes:
+          amount: 2000
+          currencyCode: VND
+          estimatedTimeDropOff: 1651121021000
+        success: true
+        carrier:
+          id: 7fd7998d-5dea-4ad4-9247-ed0947175714
+          createdAt: 1648523590540
+          updatedAt: 1649825927835
+          name: Grab Express
+          code: grab
+          enabled: true
+    DeliveryQuotesModel:
+      title: Quotes
+      required:
+        - amount
+        - currencyCode
+        - estimatedTimeDropOff
+      type: object
+      properties:
+        amount:
+          type: integer
+          format: int32
+        currencyCode:
+          type: string
+        estimatedTimeDropOff:
+          type: integer
+          format: int64
+      example:
+        amount: 2000
+        currencyCode: VND
+        estimatedTimeDropOff: 1651121021000
+    CarrierModel:
+      title: Carrier
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - name
+        - code
+        - enabled
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+        name:
+          type: string
+        code:
+          type: string
+        enabled:
+          type: boolean
+      example:
+        id: 7fd7998d-5dea-4ad4-9247-ed0947175714
+        createdAt: 1648523590540
+        updatedAt: 1649825927835
+        name: Grab Express
+        code: grab
+        enabled: true
+    CalculateCheckoutPriceForBookingRequest:
+      title: CalculateCheckoutPriceForBookingRequest
+      required:
+        - checkOutItems
+        - couponIds
+        - paymentMethod
+      type: object
+      properties:
+        checkOutItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/CheckOutItemRequest'
+          description: ''
+        couponIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: ''
+        paymentMethod:
+          type: string
+          nullable: true
+      example:
+        checkOutItems:
+          - productId: ''
+            quantity: 1
+        couponIds:
+          - 12557384-fe16-4ce9-87dc-86f9a6b61e41
+        paymentMethod: null
+    CheckOutItemRequest:
+      title: CheckOutItem
+      required:
+        - productId
+        - quantity
+      type: object
+      properties:
+        productId:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+      example:
+        productId: ''
+        quantity: 1
+    RollbackCartCheckoutRequest:
+      title: RollbackCartCheckoutRequest
+      required:
+        - userId
+        - cartDetailIds
+      type: object
+      properties:
+        userId:
+          type: string
+        cartDetailIds:
+          type: array
+          items:
+            type: string
+          description: ''
+      example:
+        userId: 03955d7e-c107-4c32-8ce0-8ef03d5679ab
+        cartDetailIds:
+          - a5cd88f2-0944-45b8-aee0-3278d967bdbf
+    UpdateStatusFailedToCartCheckoutRequest:
+      title: UpdateStatusFailedToCartCheckoutRequest
+      required:
+        - listCartIds
+      type: object
+      properties:
+        listCartIds:
+          type: array
+          items:
+            type: string
+          description: ''
+      example:
+        listCartIds:
+          - 062de03c-3cb6-4724-b101-c1b8cdf6f04d
+    UpdateStatusCompletedToCartCheckoutRequest:
+      title: UpdateStatusCompletedToCartCheckoutRequest
+      required:
+        - listCartIds
+      type: object
+      properties:
+        listCartIds:
+          type: array
+          items:
+            type: string
+          description: ''
+      example:
+        listCartIds:
+          - 062de03c-3cb6-4724-b101-c1b8cdf6f04d
+    CheckOutCartRequest:
+      title: CheckOutCartRequest
+      required:
+        - userId
+        - cartDetail
+        - couponIds
+        - paymentMethod
+      type: object
+      properties:
+        userId:
+          type: string
+        cartDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartDetailPreCheckoutRequest'
+          description: ''
+        couponIds:
+          type: array
+          items:
+            type: string
+          description: ''
+        paymentMethod:
+          type: string
+          nullable: true
+      example:
+        userId: 0c322d39-efe1-4f3e-8267-3b2e87118d2e
+        cartDetail:
+          - targetId: cb7137dd-156a-4551-a8f7-b388fbc6f0cb
+            selectedCartItems:
+              - 406f0c31-9dfd-423d-a5c8-07919eb0a919
+        couponIds: [ ]
+        paymentMethod: null
+    CheckOutCartWithDeliveryRequest:
+      title: CheckOutCartWithDeliveryRequest
+      required:
+        - userId
+        - cartDetail
+        - couponIds
+        - paymentMethod
+        - recipient
+      type: object
+      properties:
+        userId:
+          type: string
+        cartDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartDetailPreCheckoutWithDeliveryRequest'
+          description: ''
+        couponIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: ''
+        paymentMethod:
+          type: string
+          nullable: true
+        recipient:
+          $ref: '#/components/schemas/RecipientRequest'
+      example:
+        userId: 0c322d39-efe1-4f3e-8267-3b2e87118d2e
+        cartDetail:
+          - targetId: cb7137dd-156a-4551-a8f7-b388fbc6f0cb
+            selectedCartItems:
+              - 406f0c31-9dfd-423d-a5c8-07919eb0a919
+            carrierCode: grab
+        couponIds: [ ]
+        paymentMethod: null
+        recipient:
+          firstName: long
+          lastName: ho
+          email: thanglong2098@gmail.com
+          phone: '84929250409'
+          country: Vietnam
+          region: null
+          province: Ho Chi Minh City
+          district: Thủ Đức
+          ward: Hiep Binh Chanh
+          address: Giga Mall Thủ Đức, Đường Phạm Văn Đồng, Hiep Binh Chanh, Thủ Đức, Ho Chi Minh City, Vietnam
+          postalCode: '70000'
+          latitude: 10.8277902
+          longitude: 106.7208967
+    CheckOutModel:
+      title: CheckOutModel
+      type: object
+      required:
+        - checkoutPriceData
+        - cartDetail
+        - promotionData
+        - totalQuantity
+        - totalItemCount
+        - couponUsedQuantity
+      properties:
+        checkoutPriceData:
+          $ref: '#/components/schemas/CheckoutPriceDataModel'
+        cartDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartDetailReCheckoutModel'
+          description: ''
+        promotionData:
+          $ref: '#/components/schemas/PromotionDataModel'
+        totalQuantity:
+          type: integer
+          format: int32
+        totalItemCount:
+          type: integer
+          format: int32
+        couponUsedQuantity:
+          type: integer
+          format: int32
+    CheckOutWithDeliveryModel:
+      title: CheckOutWithDeliveryModel
+      type: object
+      required:
+        - checkoutPriceData
+        - cartDetail
+        - promotionData
+        - totalQuantity
+        - totalItemCount
+        - couponUsedQuantity
+      properties:
+        checkoutPriceData:
+          $ref: '#/components/schemas/CheckoutPriceDataWithDeliveryModel'
+        cartDetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartDetailCheckoutWithDeliveryModel'
+          description: ''
+        promotionData:
+          $ref: '#/components/schemas/PromotionDataModel'
+        totalQuantity:
+          type: integer
+          format: int32
+        totalItemCount:
+          type: integer
+          format: int32
+        couponUsedQuantity:
+          type: integer
+          format: int32
+    CartDetailCheckoutWithDeliveryModel:
+      title: CartDetailCheckoutWithDeliveryModel
+      required:
+        - id
+        - type
+        - targetId
+        - cartItems
+        - orderTotalWithoutShipping
+        - shippingOrder
+        - orderTotal
+        - store
+        - shippingOptions
+        - attributeValues
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        targetId:
+          type: string
+        cartItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItemModel'
+          description: ''
+        orderTotalWithoutShipping:
+          type: integer
+          format: int32
+        shippingOrder:
+          $ref: '#/components/schemas/ShippingOptionModel'
+        orderTotal:
+          type: integer
+          format: int32
+        store:
+          $ref: '#/components/schemas/StoreModel'
+        packages:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackageDeliveryModel'
+        attributeValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributeValueModel'
+    PackageDeliveryModel:
+      title: PackageDeliveryModel
+      type: object
+      properties:
+        productId:
+          type: string
+          format: uuid
+        productName:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        price:
+          type: integer
+          format: int32
+        width:
+          type: integer
+          format: int32
+          description: Width of the package in cm i.e. 10
+        height:
+          type: integer
+          format: int32
+          description: Height of the package in cm i.e. 10
+        length:
+          type: integer
+          format: int32
+          description: Length of the package in cm i.e. 12
+        weight:
+          type: integer
+          format: int32
+          description: Weight of the package in grams i.e. 100
+  parameters:
+    OffsetParam:
+      in: query
+      name: offset
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 100000
+        default: 0
+      required: false
+      description: Current offset
+    LimitParam:
+      in: query
+      name: limit
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100000
+        default: 10
+      required: false
+      description: Max length list data
+    FilterEavQuery:
+      in: query
+      name: eavFilter
+      schema:
+        type: object
+        allOf:
+          - $ref: '#/components/schemas/FilterEav'
+      style: deepObject
+      explode: true
+      description: (Schema FilterEav) Options for filtering entity by attribute value the results
+      required: false
+    AttributeIdParam:
+      in: path
+      name: attributeId
+      schema:
+        type: string
+        format: uuid
+        example: 91624780-592a-4c2e-af96-b2f0fa455ef4
+      required: true
+      description: attribute id is uuid
+    AttributeFilterQuery:
+      in: query
+      name: filter
+      schema:
+        type: object
+        allOf:
+          - $ref: '#/components/schemas/AttributeFilter'
+      style: deepObject
+      explode: true
+      description: (Schema AttributeFilter) Options for filtering the results
+      required: false
+    AttributeSortQuery:
+      in: query
+      name: sort
+      schema:
+        type: object
+        allOf:
+          - $ref: '#/components/schemas/AttributeSort'
+      style: deepObject
+      explode: true
+      description: (Schema AttributeSort) Options for sorting the results
+      required: false
+    CartItemIdParam:
+      in: path
+      name: cartItemId
+      schema:
+        type: string
+        format: uuid
+        example: 91624780-592a-4c2e-af96-b2f0fa455ef4
+      required: true
+      description: cart product id is uuid
+    PreCheckoutIncludeParam:
+      in: query
+      name: includes
+      schema:
+        type: string
+        enum:
+          - delivery
+        nullable: true
+      required: false
+      description: Max length list data
